@@ -2,8 +2,9 @@ using static UnityEngine.Random;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
-public class CubeSpawner : MonoBehaviour
+public class CubeSpawner : Spawner<Cube>
 {
     [SerializeField] private Cube _cubePrefab;
     [SerializeField] private int _maxPoolSize = 20;
@@ -13,19 +14,25 @@ public class CubeSpawner : MonoBehaviour
     [SerializeField] private int _maxHeight;
     [SerializeField] private int _delay;
 
-    private Queue<Cube> _cubesPool;
+    //private Queue<Cube> _cubesPool;
+    private WaitForSeconds _interval;
+
+    public int MaxPoolSize => _maxPoolSize;
+
+    public event Action<Vector3> CubeWasGivenBack;
 
     private void Awake()
     {
-        _cubesPool = new Queue<Cube>();
+        _pool = new Queue<Cube>();
 
         for (int i = 0; i < _maxPoolSize; i++)
         {
             Cube cube = Instantiate(_cubePrefab);
             cube.gameObject.SetActive(false);
-            _cubesPool.Enqueue(cube);
+            _pool.Enqueue(cube);
         }
 
+        _interval = new WaitForSeconds(_delay);
         StartCoroutine(Spawning());
     }
 
@@ -36,33 +43,29 @@ public class CubeSpawner : MonoBehaviour
                             Range(_minCoordinate, _maxCoordinate + 1));
     }
 
-    public void GetCube(Vector3 position)
+    protected override Cube GetFromPool(Vector3 position)
     {
-        if (_cubesPool.Count > 0)
-        {
-            Cube cube = _cubesPool.Dequeue();
-            cube.gameObject.SetActive(true);
-            cube.Initialize(position);
-            cube.TimeCounted += GiveBackCube;
-        }
+        Cube cube = base.GetFromPool(position);
+        cube.TimeCounted += GiveBackToPool;
+        
+        return cube;
     }
 
-    private void GiveBackCube(Cube cube)
+    protected override void GiveBackToPool(Cube cube)
     {
-        cube.gameObject.SetActive(false);
-        cube.TimeCounted -= GiveBackCube;
-        _cubesPool.Enqueue(cube);
+        cube.TimeCounted -= GiveBackToPool;
+        base.GiveBackToPool(cube);
+        CubeWasGivenBack?.Invoke(cube.transform.position);
     }
 
     private IEnumerator Spawning()
     {
-        WaitForSeconds interval = new WaitForSeconds(_delay);
-
         while (enabled)
         {
-            yield return interval;
+            yield return _interval;
 
-            GetCube(GetRandomPosition());
+            if (_pool.Count > 0)
+                GetFromPool(GetRandomPosition());
         }
     }
 }
