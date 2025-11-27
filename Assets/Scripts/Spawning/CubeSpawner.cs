@@ -7,19 +7,17 @@ using System;
 public class CubeSpawner : Spawner<Cube>
 {
     [SerializeField] private Cube _cubePrefab;
-    [SerializeField] private int _maxPoolSize = 20;
     [SerializeField] private int _minCoordinate;
     [SerializeField] private int _maxCoordinate;
     [SerializeField] private int _minHeight;
     [SerializeField] private int _maxHeight;
     [SerializeField] private int _delay;
 
-    //private Queue<Cube> _cubesPool;
     private WaitForSeconds _interval;
 
     public int MaxPoolSize => _maxPoolSize;
 
-    public event Action<Vector3> CubeWasGivenBack;
+    public event Func<Vector3, Bomb> CubeWasGivenBack;
 
     private void Awake()
     {

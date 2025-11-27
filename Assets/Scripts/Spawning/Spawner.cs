@@ -5,8 +5,7 @@ using UnityEngine.UIElements;
 
 public class Spawner<T> : MonoBehaviour where T: DestroyableObject
 {
-    [SerializeField] private T _prefab;
-    [SerializeField] private int _maxPoolSize;
+    [SerializeField] protected int _maxPoolSize;
 
     protected Queue<T> _pool;
 

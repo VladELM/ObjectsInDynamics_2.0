@@ -147,10 +147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ef4959117a56a4a8d57d6b7958f3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _material: {fileID: 2100000, guid: 7e438648193244740b10798a6d674d61, type: 2}
+  _defaultMaterial: {fileID: 2100000, guid: 7e438648193244740b10798a6d674d61, type: 2}
   _minLifeTime: 2
   _maxLifeTime: 5
-  _delta: 0.05
 --- !u!114 &2962290760809650399
 MonoBehaviour:
   m_ObjectHideFlags: 0

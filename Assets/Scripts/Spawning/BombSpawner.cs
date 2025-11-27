@@ -8,23 +8,21 @@ public class BombSpawner : Spawner<Bomb>
     [SerializeField] private Bomb _bombPrefab;
     [SerializeField] private CubeSpawner _cubeSpawner;
 
-    private Queue<Bomb> _bombsPool;
     private int _poolSize;
 
     private void Awake()
     {
-        _bombsPool = new Queue<Bomb>();
+        _pool = new Queue<Bomb>();
         _poolSize = _cubeSpawner.MaxPoolSize * 2;
         
         for (int i = 0; i < _poolSize; i++)
         {
             Bomb bomb = Instantiate(_bombPrefab);
             bomb.gameObject.SetActive(false);
-            _bombsPool.Enqueue(bomb);
+            _pool.Enqueue(bomb);
         }
 
-        
-        //_cubeSpawner.CubeWasGivenBack += GetFromPool;
+        _cubeSpawner.CubeWasGivenBack += GetFromPool;
     }
 
     protected override Bomb GetFromPool(Vector3 position)

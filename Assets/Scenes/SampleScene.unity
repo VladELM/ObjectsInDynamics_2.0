@@ -473,8 +473,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faa29b2914ec4554d84f0803afef7ffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _prefab: {fileID: 1199390469222364055, guid: 7595e42407780964e8fe4f6ac97f250c, type: 3}
+  _maxPoolSize: 10
   _cubePrefab: {fileID: 1199390469222364055, guid: 7595e42407780964e8fe4f6ac97f250c, type: 3}
-  _maxPoolSize: 20
   _minCoordinate: 0
   _maxCoordinate: 5
   _minHeight: 15
@@ -492,9 +493,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dba5cda401e71b41a94440eb33c5cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _prefab: {fileID: 3033725476459726835, guid: 4e4aa2691f26f2b428e6648305851bd0, type: 3}
+  _maxPoolSize: 20
   _bombPrefab: {fileID: 3033725476459726835, guid: 4e4aa2691f26f2b428e6648305851bd0, type: 3}
-  _minLifeTime: 2
-  _maxLifeTime: 5
   _cubeSpawner: {fileID: 1008635937}
 --- !u!1 &1247895811
 GameObject:
