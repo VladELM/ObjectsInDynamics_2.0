@@ -1,0 +1,34 @@
+using JetBrains.Annotations;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using UnityEngine.UIElements;
+
+public class ObjectsUI<T> : MonoBehaviour where T : ISpawnable
+{
+    [SerializeField] private T _spawner;
+    [SerializeField] private NumberViewer _allSpawnedObjectsViewer;
+    [SerializeField] private NumberViewer _createdObjectsViewer;
+    [SerializeField] private NumberViewer _activeObjectsViewer;
+
+    private void OnEnable()
+    {
+        _spawner.OnSpawn += _activeObjectsViewer.AssigneText;
+
+        _spawner.ObjectSpawned += _allSpawnedObjectsViewer.AssigneText;
+        _spawner.ObjectsCreated += _createdObjectsViewer.AssigneText;
+        _spawner.ObjectTaked += _activeObjectsViewer.AssigneText;
+        _spawner.ObjectGivenBack += _activeObjectsViewer.AssigneText;
+    }
+
+    private void OnDisable()
+    {
+        _spawner.OnSpawn -= _activeObjectsViewer.AssigneText;
+
+        _spawner.ObjectSpawned -= _allSpawnedObjectsViewer.AssigneText;
+        _spawner.ObjectsCreated -= _createdObjectsViewer.AssigneText;
+        _spawner.ObjectTaked -= _activeObjectsViewer.AssigneText;
+        _spawner.ObjectGivenBack -= _activeObjectsViewer.AssigneText;
+    }
+}

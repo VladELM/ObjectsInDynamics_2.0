@@ -5,23 +5,11 @@ using System.Collections.Generic;
 
 public class BombSpawner : Spawner<Bomb>
 {
-    [SerializeField] private Bomb _bombPrefab;
     [SerializeField] private CubeSpawner _cubeSpawner;
-
-    private int _poolSize;
 
     private void Awake()
     {
-        _pool = new Queue<Bomb>();
-        _poolSize = _cubeSpawner.MaxPoolSize * 2;
-        
-        for (int i = 0; i < _poolSize; i++)
-        {
-            Bomb bomb = Instantiate(_bombPrefab);
-            bomb.gameObject.SetActive(false);
-            _pool.Enqueue(bomb);
-        }
-
+        CreatePool();
         _cubeSpawner.CubeWasGivenBack += GetFromPool;
     }
 

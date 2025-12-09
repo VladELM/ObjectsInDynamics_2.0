@@ -6,7 +6,6 @@ using System;
 
 public class CubeSpawner : Spawner<Cube>
 {
-    [SerializeField] private Cube _cubePrefab;
     [SerializeField] private int _minCoordinate;
     [SerializeField] private int _maxCoordinate;
     [SerializeField] private int _minHeight;
@@ -15,21 +14,11 @@ public class CubeSpawner : Spawner<Cube>
 
     private WaitForSeconds _interval;
 
-    public int MaxPoolSize => _maxPoolSize;
-
     public event Func<Vector3, Bomb> CubeWasGivenBack;
 
     private void Awake()
     {
-        _pool = new Queue<Cube>();
-
-        for (int i = 0; i < _maxPoolSize; i++)
-        {
-            Cube cube = Instantiate(_cubePrefab);
-            cube.gameObject.SetActive(false);
-            _pool.Enqueue(cube);
-        }
-
+        CreatePool();
         _interval = new WaitForSeconds(_delay);
         StartCoroutine(Spawning());
     }
