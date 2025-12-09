@@ -14,17 +14,17 @@ public class ObjectsUI<T> : MonoBehaviour where T : ISpawnable
 
     private void OnEnable()
     {
-        _spawner.ObjectSpawned += _allSpawnedObjectsViewer.AssigneText;
-        _spawner.ObjectsCreated += _createdObjectsViewer.AssigneText;
-        _spawner.ObjectTaked += _activeObjectsViewer.AssigneText;
-        _spawner.ObjectGivenBack += _activeObjectsViewer.AssigneText;
+        _spawner.ObjectSpawned += _allSpawnedObjectsViewer.AssigneAllSpawnedObjectsAmount;
+        _spawner.ObjectsCreated += _createdObjectsViewer.AssigneCreatedObjectsAmount;
+        _spawner.ObjectTaked += _activeObjectsViewer.AssigneActiveObjectsAmount;
+        _spawner.ObjectGivenBack += _activeObjectsViewer.AssigneActiveObjectsAmount;
     }
 
     private void OnDisable()
     {
-        _spawner.ObjectSpawned -= _allSpawnedObjectsViewer.AssigneText;
-        _spawner.ObjectsCreated -= _createdObjectsViewer.AssigneText;
-        _spawner.ObjectTaked -= _activeObjectsViewer.AssigneText;
-        _spawner.ObjectGivenBack -= _activeObjectsViewer.AssigneText;
+        _spawner.ObjectSpawned -= _allSpawnedObjectsViewer.AssigneAllSpawnedObjectsAmount;
+        _spawner.ObjectsCreated -= _createdObjectsViewer.AssigneCreatedObjectsAmount;
+        _spawner.ObjectTaked -= _activeObjectsViewer.AssigneActiveObjectsAmount;
+        _spawner.ObjectGivenBack -= _activeObjectsViewer.AssigneActiveObjectsAmount;
     }
 }

@@ -15,6 +15,21 @@ public class NumberViewer : MonoBehaviour
         _text = GetComponent<TMP_Text>();
     }
 
+    public void AssigneAllSpawnedObjectsAmount()
+    {
+        _text.text = Convert.ToString(Convert.ToInt32(_text.text) + 1);
+    }
+
+    public void AssigneCreatedObjectsAmount(int number)
+    {
+        _text.text = Convert.ToString(number);
+    }
+
+    public void AssigneActiveObjectsAmount(int number)
+    {
+        _text.text = Convert.ToString(number);
+    }
+
     public void AssigneText(int number)
     {
         _text.text = Convert.ToString(number);
