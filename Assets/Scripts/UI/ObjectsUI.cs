@@ -14,8 +14,6 @@ public class ObjectsUI<T> : MonoBehaviour where T : ISpawnable
 
     private void OnEnable()
     {
-        _spawner.OnSpawn += _activeObjectsViewer.AssigneText;
-
         _spawner.ObjectSpawned += _allSpawnedObjectsViewer.AssigneText;
         _spawner.ObjectsCreated += _createdObjectsViewer.AssigneText;
         _spawner.ObjectTaked += _activeObjectsViewer.AssigneText;
@@ -24,8 +22,6 @@ public class ObjectsUI<T> : MonoBehaviour where T : ISpawnable
 
     private void OnDisable()
     {
-        _spawner.OnSpawn -= _activeObjectsViewer.AssigneText;
-
         _spawner.ObjectSpawned -= _allSpawnedObjectsViewer.AssigneText;
         _spawner.ObjectsCreated -= _createdObjectsViewer.AssigneText;
         _spawner.ObjectTaked -= _activeObjectsViewer.AssigneText;

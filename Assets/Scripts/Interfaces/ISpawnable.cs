@@ -5,8 +5,6 @@ using UnityEngine;
 
 public interface ISpawnable
 {
-    public event Action OnSpawn;
-
     public event Action<int> ObjectsCreated;
     public event Action ObjectSpawned;
     public event Action<int> ObjectTaked;
