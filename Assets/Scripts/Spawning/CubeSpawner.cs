@@ -1,7 +1,6 @@
 using static UnityEngine.Random;
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using System;
 
 public class CubeSpawner : Spawner<Cube>
@@ -14,7 +13,7 @@ public class CubeSpawner : Spawner<Cube>
 
     private WaitForSeconds _interval;
 
-    public event Func<Vector3, Bomb> CubeWasGivenBack;
+    public event Action<Vector3> CubeWasGivenBack;
 
     private void Awake()
     {
@@ -30,17 +29,8 @@ public class CubeSpawner : Spawner<Cube>
                             Range(_minCoordinate, _maxCoordinate + 1));
     }
 
-    protected override Cube GetFromPool(Vector3 position)
+    protected override void GiveBackToPool(DestroyableObject cube)
     {
-        Cube cube = base.GetFromPool(position);
-        cube.TimeCounted += GiveBackToPool;
-        
-        return cube;
-    }
-
-    protected override void GiveBackToPool(Cube cube)
-    {
-        cube.TimeCounted -= GiveBackToPool;
         base.GiveBackToPool(cube);
         CubeWasGivenBack?.Invoke(cube.transform.position);
     }

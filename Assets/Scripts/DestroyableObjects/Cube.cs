@@ -1,5 +1,4 @@
 using static UnityEngine.Random;
-using System;
 using UnityEngine;
 using System.Collections;
 
@@ -18,8 +17,6 @@ public class Cube : DestroyableObject
     private Vector3 _defaultRotation;
     private Vector3 _defaultVelocity;
     private bool _isTouched;
-
-    public event Action<Cube> TimeCounted;
 
     private void Awake()
     {
@@ -57,6 +54,6 @@ public class Cube : DestroyableObject
     {
         yield return new WaitForSeconds(lifeTime);
 
-        TimeCounted.Invoke(this);
+        CallEvent();
     }
 }

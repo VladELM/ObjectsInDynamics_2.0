@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Spawner<T> : MonoBehaviour, ISpawnable where T: DestroyableObject
 {
@@ -30,7 +28,7 @@ public class Spawner<T> : MonoBehaviour, ISpawnable where T: DestroyableObject
         ObjectsCreated?.Invoke(_pool.Count);
     }
 
-    protected virtual T GetFromPool(Vector3 position)
+    protected void GetFromPool(Vector3 position)
     {
         T destroyableObject = _pool.Dequeue();
         destroyableObject.gameObject.SetActive(true);
@@ -38,13 +36,14 @@ public class Spawner<T> : MonoBehaviour, ISpawnable where T: DestroyableObject
         ObjectSpawned?.Invoke();
         ObjectTaked?.Invoke(_maxPoolSize - _pool.Count);
 
-        return destroyableObject;
+        destroyableObject.TimeCounted += GiveBackToPool;
     }
 
-    protected virtual void GiveBackToPool(T destroyableObject)
+    protected virtual void GiveBackToPool(DestroyableObject destroyableObject)
     {
+        destroyableObject.TimeCounted -= GiveBackToPool;
         destroyableObject.gameObject.SetActive(false);
-        _pool.Enqueue(destroyableObject);
+        _pool.Enqueue(destroyableObject as T);
         ObjectGivenBack?.Invoke(_pool.Count);
     }
 }
